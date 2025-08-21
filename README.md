@@ -1,90 +1,69 @@
-# **Desafio Front-end Júnior**
+# React + TypeScript + Vite
 
-Seja bem-vindo! Este desafio foi projetado para avaliar sua capacidade técnica como candidato(a) à vaga de **Desenvolvedor(a) Front-end Júnior**.
+This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
 
----
+Currently, two official plugins are available:
 
-## **Proposta**
-Você deverá desenvolver uma aplicação **React.js** com duas páginas principais: **Lista de Gatos** e **Formulário de Cadastro em Etapas**.  
-O objetivo é avaliar:
-- Consumo de APIs e manipulação de dados assíncronos;
-- Organização e componentização do código;
-- Validações de formulários;
-- Boas práticas de interface e experiência do usuário.
+- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) for Fast Refresh
+- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
 
----
+## Expanding the ESLint configuration
 
-## **Navegação**
-A aplicação deve ter um **menu superior** com dois links:
-- **Lista de gatos**
-- **Formulário**
+If you are developing a production application, we recommend updating the configuration to enable type-aware lint rules:
 
----
+```js
+export default tseslint.config([
+  globalIgnores(['dist']),
+  {
+    files: ['**/*.{ts,tsx}'],
+    extends: [
+      // Other configs...
 
-## **1) Página: Lista de Gatos**
-- Deve requisitar a lista de **tags** no endereço:  
-  `https://cataas.com/api/tags`
-- As tags devem ser exibidas como **cards expansíveis**.
-- Cada card deve exibir no título o **nome da tag**.
-- Ao clicar no título do card, o corpo do card deve se **expandir abaixo do título** para exibir:
-    - A lista de **IDs** obtida no endereço:  
-      `https://cataas.com/api/cats`
-    - **Filtragem:** exibir apenas os gatos cuja lista de tags **contenha a tag do card** selecionado.
+      // Remove tseslint.configs.recommended and replace with this
+      ...tseslint.configs.recommendedTypeChecked,
+      // Alternatively, use this for stricter rules
+      ...tseslint.configs.strictTypeChecked,
+      // Optionally, add this for stylistic rules
+      ...tseslint.configs.stylisticTypeChecked,
 
-**Referência visual:**
-![image](https://user-images.githubusercontent.com/6603813/120489184-d1a52c00-c38d-11eb-8cae-d281fc76ec92.png)
+      // Other configs...
+    ],
+    languageOptions: {
+      parserOptions: {
+        project: ['./tsconfig.node.json', './tsconfig.app.json'],
+        tsconfigRootDir: import.meta.dirname,
+      },
+      // other options...
+    },
+  },
+])
+```
 
----
+You can also install [eslint-plugin-react-x](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-x) and [eslint-plugin-react-dom](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-dom) for React-specific lint rules:
 
-## **2) Página: Formulário (3 etapas)**
-O formulário deve ser dividido em **3 etapas**, cada uma em um **React Component** separado:
+```js
+// eslint.config.js
+import reactX from 'eslint-plugin-react-x'
+import reactDom from 'eslint-plugin-react-dom'
 
-**Etapa 1**
-- Email (**obrigatório**)
-- Senha (**obrigatório**)
-- Confirmação de senha (**obrigatório**)
-
-**Etapa 2**
-- Nome (**obrigatório**)
-- Sobrenome (**obrigatório**)
-- Data de nascimento
-
-**Etapa 3**
-- Endereço completo (**obrigatório**)
-
-**Regras e comportamentos:**
-- As etapas devem ser exibidas **uma de cada vez**, com **abas** para navegação **livre** entre elas;
-- Cada etapa deve ter um **botão de avançar** para a próxima etapa;
-- O **botão de Enviar** deve estar **visível em todas as etapas**, porém **desabilitado** até que **todas as 3 etapas** estejam válidas;
-- Caso haja **erro** em uma etapa, a **aba** correspondente deve ter um **indicador visual de erro**;
-- Quando uma etapa for validada corretamente, a aba deve ter um **indicador de concluída**;
-- Ao finalizar todas as etapas e clicar em **Enviar**, deve aparecer uma **modal de confirmação de sucesso**.
-
-**Referência visual:**
-![image](https://user-images.githubusercontent.com/6603813/120489206-d7027680-c38d-11eb-9a52-a95aa640c905.png)
-
----
-
-## **Estilo**
-- Você é livre para definir cores, fontes e estilos visuais.
-- O foco será avaliar clareza, organização e usabilidade.
-
----
-
-## **Entrega**
-- Publique seu projeto no **GitHub** em um repositório público.
-- Inclua no **README**:
-    - Passos para rodar o projeto;
-    - Dependências utilizadas.
-
----
-
-## **Observações**
-- Se a API estiver offline, utilize os arquivos `.json` incluídos no projeto para simular as requisições.
-
----
-
-## **Diferenciais**
-- Uso de **React Hooks** e **React Router**.
-- Componentização reutilizável.
-- Uso de **bibliotecas de UI** (Material UI, Chakra UI, Tailwind CSS, etc.).
+export default tseslint.config([
+  globalIgnores(['dist']),
+  {
+    files: ['**/*.{ts,tsx}'],
+    extends: [
+      // Other configs...
+      // Enable lint rules for React
+      reactX.configs['recommended-typescript'],
+      // Enable lint rules for React DOM
+      reactDom.configs.recommended,
+    ],
+    languageOptions: {
+      parserOptions: {
+        project: ['./tsconfig.node.json', './tsconfig.app.json'],
+        tsconfigRootDir: import.meta.dirname,
+      },
+      // other options...
+    },
+  },
+])
+```
