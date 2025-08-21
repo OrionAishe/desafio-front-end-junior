@@ -1,4 +1,4 @@
-import { Accordion, AccordionDetails, AccordionSummary, Card as CardMUI } from "@mui/material";
+import { Accordion, AccordionDetails, AccordionSummary, Card as CardMUI, Typography } from "@mui/material";
 
 interface props {
     title: string;
@@ -31,7 +31,7 @@ const Card = (props: props) => {
             <AccordionDetails>
                 <CardMUI>
                     {filteredIds?.map((item, index) => {
-                        return <p key={index}>{item.id}</p>
+                        return <Typography padding={"10px"} key={index}>{item.id}</Typography>
                     })}
                 </CardMUI>
             </AccordionDetails>
