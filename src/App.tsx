@@ -1,23 +1,23 @@
 import { BrowserRouter, Link, Route, Routes } from "react-router-dom"
 import CatList from "./pages/CatList"
-import Form from "./pages/Form"
+import FormPage from "./pages/FormPage"
 import { Box, Stack } from "@mui/material"
 
 
 function App() {
   return (
     <BrowserRouter>
-      <Stack direction="row" spacing={5} marginBottom={"20px"}>
-        <Box border={"1px solid black"} padding={"10px"} fontFamily={"Arial"}>
-          <Link to={"/CatList"}>Cat List</Link>
+      <Stack sx={{ marginBottom: '20px'}} direction= {'row'} spacing={5}>
+        <Box sx={{border: '1px solid black', padding: '10px', fontFamily: 'Arial'}}>
+          <Link to={"/CatList"}>Lista de Gatos</Link>
         </Box>
-        <Box border={"1px solid black"} padding={"10px"} fontFamily={"Arial"}>
-          <Link to={"/Form"}>Form</Link>
+        <Box sx={{border: '1px solid black', padding: '10px', fontFamily: 'Arial'}}>
+          <Link to={"/Form"}>Formulário</Link>
         </Box>
       </Stack>
       <Routes>
         <Route Component={CatList} path="/CatList" />
-        <Route Component={Form} path="/Form" />
+        <Route Component={FormPage} path="/Form" />
       </Routes>
     </BrowserRouter>
   )

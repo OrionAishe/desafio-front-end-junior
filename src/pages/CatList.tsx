@@ -1,11 +1,10 @@
-import { useEffect, useState, type Key } from "react";
-import Card from "../components/molecules/Card";
+import { useEffect, useState } from "react";
+import Card, { type CatData } from "../components/molecules/Card/Card";
 import { getCatList, getTagList } from "../assets/api/api";
 
 const CatList = () => {
-    const [tags, setTags] = useState<any>();
-    const [cats, setCats] = useState<any>();
-    const tagToFilter: string[] = [];
+    const [tags, setTags] = useState<string[]>([]);
+    const [cats, setCats] = useState<CatData[] | undefined>([]);
 
     useEffect(() => {
         async function getTags() {
@@ -20,29 +19,25 @@ const CatList = () => {
         getTags();
     }, [])
 
-    cats?.map((item: { tags: any; }) => {
-        return item?.tags?.map((item: any) => {
-            tagToFilter.push(item)
-            return item;
-        })
-    })
+    const tagToFilter = cats?.flatMap((cat) => cat.tags) ?? [];
 
     const tagsFiltered = tags?.map((item: string) => {
         const tag = item;
         return tagToFilter?.filter((item: string) => {
             return item == tag;
         })
-    }).filter((item: string | any[]) => {
+    }).filter((item: string | string[]) => {
         return item.length > 0;
     })
 
+    const tagsToRender = tagsFiltered?.length ? tagsFiltered : tags ?? [];
+
     return (
         <>
-            {tagsFiltered?.length > 0 ? tagsFiltered.map((item: string, index: Key) => {
-                return <Card key={index} title={item[0]} catData={cats} />
-            }) : tags?.map((item: string, index: Key) => {
-                return <Card key={index} title={item[0]} catData={cats} />
-            })}
+            {tagsToRender.map((item, index) => (
+                <Card key={index} title={item[0]} catData={cats} />
+            ))}
+
         </>
     )
 }

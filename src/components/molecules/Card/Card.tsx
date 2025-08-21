@@ -1,13 +1,15 @@
 import { Accordion, AccordionDetails, AccordionSummary, Card as CardMUI, Typography } from "@mui/material";
 
-interface props {
-    title: string;
-    catData: {
+export interface CatData{
         id: string,
         tags: string[],
         mimetype: string,
         createdAt: string
-    }[] | undefined;
+}
+
+interface props {
+    title: string;
+    catData: CatData[] | undefined;
 }
 
 const Card = (props: props) => {
@@ -17,9 +19,9 @@ const Card = (props: props) => {
             return item == title;
         })
         return { cat, item }
-    }).filter((item: any) => {
+    }).filter((item) => {
         return item?.cat?.length > 0;
-    }).map((item: any) => {
+    }).map((item) => {
         return item.item;
     })
 
