@@ -25,5 +25,6 @@ npm run dev
 
 * Vite
 * Material-UI
+* Axios
 * React Router
 * React Hook Form
