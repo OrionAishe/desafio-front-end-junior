@@ -18,6 +18,14 @@ interface Form {
 const Form = () => {
     const [activeStep, setActiveStep] = React.useState(0);
     const [open, setOpen] = React.useState(false);
+    const [firstStepError, setFirstStepError] = React.useState(false);
+    const [secondStepError, setSecondStepError] = React.useState(false);
+    const [thirdStepError, setThirdStepError] = React.useState(false);
+    const [firstStepCompleted, setFirstStepCompleted] = React.useState(false);
+    const [secondStepCompleted, setSecondStepCompleted] = React.useState(false);
+    const [thirdStepCompleted, setThirdStepCompleted] = React.useState(false);
+
+
     const handleOpen = () => setOpen(true);
     const handleClose = () => setOpen(false);
 
@@ -50,53 +58,90 @@ const Form = () => {
         }
     }
 
-    function setFirstStepErrors() {
+    function getFirstStepErrors() {
+        if (formState.touchedFields.email == undefined) {
+            setFirstStepError(true);
+            return
+        }
         if (fields.email == '') {
             setError("email", { message: "Campo não pode ficar vazio" });
-            return false;
-        }
-        if (fields.password == '' && fields.confirmPassword == '') {
+            setFirstStepError(true);
+            console.log(formState.touchedFields);
+        } if (fields.password == '' && fields.confirmPassword == '') {
             setError("confirmPassword", { message: "Campo não pode ficar vazio" });
-            return false;
-        }
-        if (fields.password != fields.confirmPassword) {
+            setFirstStepError(true);
+        } if (fields.password != fields.confirmPassword) {
             setError("confirmPassword", { message: "Senha diferente da confirmação" });
-            return false;
+            setFirstStepError(true);
+        } if (formState.errors.email || formState.errors.password || formState.errors.confirmPassword) {
+            setFirstStepError(true);
+            setFirstStepCompleted(false);
+        } else {
+            setFirstStepError(false);
+            setFirstStepCompleted(true);
         }
     }
 
-    function setSecondStepErrors() {
+    function getSecondStepErrors() {
+        if (formState.touchedFields.name == undefined) {
+            setSecondStepError(true);
+            return
+        }
         if (fields.name == '') {
             setError("name", { message: "Campo não pode ficar vazio" });
-            return false;
+            setSecondStepError(true)
         }
         if (fields.lastName == '') {
             setError("lastName", { message: "Campo não pode ficar vazio" });
-            return false;
+            setSecondStepError(true)
+        }
+        if (formState.errors.name || formState.errors.lastName) {
+            setSecondStepError(true);
+            setSecondStepCompleted(false);
+        } else {
+            setSecondStepError(false);
+            setSecondStepCompleted(true);
         }
     }
 
-    function setThirdStepErrors() {
+    function getThirdStepErrors() {
+        if (formState.touchedFields.address == undefined) {
+            setThirdStepError(true);
+            return
+        }
         if (fields.address == '') {
             setError("address", { message: "Campo não pode ficar vazio" });
-            return false;
+            setThirdStepError(true)
+        } if (formState.errors.address) {
+            setThirdStepError(true);
+            setThirdStepCompleted(false);
+        } else {
+            setThirdStepError(false);
+            setThirdStepCompleted(true);
         }
     }
 
     const handleNext = () => {
-        if (activeStep == 0 && setFirstStepErrors() == false) {
-            return
-        } if (activeStep == 1 && setSecondStepErrors() == false) {
-            return
-        } if (activeStep == 2 && setThirdStepErrors() == false) {
-            return
+        getFirstStepErrors()
+        if (activeStep == 0) {
+            setActiveStep((prevActiveStep) => prevActiveStep + 1);
         }
-        else {
+        if (activeStep == 1) {
+            getSecondStepErrors()
+            setActiveStep((prevActiveStep) => prevActiveStep + 1);
+        } if (activeStep == 2) {
+            getThirdStepErrors()
             setActiveStep((prevActiveStep) => prevActiveStep + 1);
         }
     };
 
     const handleBack = () => {
+        getFirstStepErrors()
+        if (activeStep == 1) {
+            getSecondStepErrors()
+        } if (activeStep == 2) {
+            getThirdStepErrors()
+        }
         setActiveStep((prevActiveStep) => prevActiveStep - 1);
     };
 
@@ -127,15 +172,15 @@ const Form = () => {
                     </Box>
                 </Box>
             </Modal>
-            <Stepper activeStep={activeStep}>
-                <Step>
-                    <StepLabel>Etapa 1</StepLabel>
+            <Stepper activeStep={activeStep} nonLinear>
+                <Step completed={firstStepCompleted}>
+                    <StepLabel error={firstStepError}>Etapa 1</StepLabel>
                 </Step>
-                <Step>
-                    <StepLabel>Etapa 2</StepLabel>
+                <Step completed={secondStepCompleted}>
+                    <StepLabel error={secondStepError}>Etapa 2</StepLabel>
                 </Step>
-                <Step>
-                    <StepLabel>Etapa 3</StepLabel>
+                <Step completed={thirdStepCompleted}>
+                    <StepLabel error={thirdStepError}>Etapa 3</StepLabel>
                 </Step>
             </Stepper>
             <Box sx={{ display: "flex", justifyContent: 'center', width: '50%', padding: '30px 100px' }}>

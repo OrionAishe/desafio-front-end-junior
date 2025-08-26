@@ -25,7 +25,7 @@ const FormFirstStep = (props: props) => {
                     defaultValue={getValues("email")}
                     {...register("email", { required: true })}
                     color={formState.errors.email ? "error" : "primary"}
-                    onFocus={() => clearErrors()} />
+                    onFocus={() => clearErrors("email")} />
                 {formState.errors.email && <Typography color="error">{formState.errors.email.message}</Typography>}
             </FormControl>
             <FormControl sx={{ width: '100%', display: 'flex' }}>
@@ -39,7 +39,7 @@ const FormFirstStep = (props: props) => {
                     type={"password"}
                     defaultValue={getValues("password")}
                     {...register("password", { required: true })}
-                    onFocus={() => clearErrors()}
+                    onFocus={() => clearErrors(["password", "confirmPassword"])}
                 />
                 {formState.errors.confirmPassword && <Typography color="error">{formState.errors.confirmPassword.message}</Typography>}
             </FormControl>
@@ -54,7 +54,7 @@ const FormFirstStep = (props: props) => {
                     type={"password"}
                     defaultValue={getValues("confirmPassword")}
                     {...register("confirmPassword", { required: true })}
-                    onFocus={() => clearErrors()}
+                    onFocus={() => clearErrors(["confirmPassword", "password"])}
                 />
                 {formState.errors.confirmPassword && <Typography color="error">{formState.errors.confirmPassword.message}</Typography>}
             </FormControl>

@@ -13,7 +13,7 @@ const FormSecondStep = (props: props) => {
                     defaultValue={getValues("name")}
                     {...register("name", { required: true })}
                     color={formState.errors.name ? "error" : "primary"}
-                    onFocus={() => clearErrors()}
+                    onFocus={() => clearErrors("name")}
                 />
                 {formState.errors.name && <Typography color="error">{formState.errors.name.message}</Typography>}
             </FormControl>
@@ -25,7 +25,7 @@ const FormSecondStep = (props: props) => {
                     defaultValue={getValues("lastName")}
                     {...register("lastName", { required: true })}
                     color={formState.errors.lastName ? "error" : "primary"}
-                    onFocus={() => clearErrors()}
+                    onFocus={() => clearErrors("lastName")}
                 />
                 {formState.errors.lastName && <Typography color="error">{formState.errors.lastName.message}</Typography>}
             </FormControl>
