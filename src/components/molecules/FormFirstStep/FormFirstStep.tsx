@@ -17,25 +17,26 @@ const FormFirstStep = (props: props) => {
             <FormControl sx={{ width: '100%', display: 'flex' }}>
                 <FormLabel
                     sx={{ marginTop: '20px' }}
-                    color={formState.errors.email ? "error" : "primary"}>
+                    error={!!formState.errors.email}>
                     E-mail:
                 </FormLabel>
                 <Input
                     type={"email"}
                     defaultValue={getValues("email")}
                     {...register("email", { required: true })}
+                    error={!!formState.errors.email}
                     color={formState.errors.email ? "error" : "primary"}
                     onFocus={() => clearErrors("email")} />
                 {formState.errors.email && <Typography color="error">{formState.errors.email.message}</Typography>}
             </FormControl>
-            <FormControl sx={{ width: '100%', display: 'flex' }}>
+            <FormControl sx={{ width: '100%', display: 'flex' }} color="error">
                 <FormLabel
                     sx={{ marginTop: '20px' }}
-                    color={formState.errors.confirmPassword ? "error" : "primary"}>
+                    error={!!formState.errors.confirmPassword}>
                     Senha:
                 </FormLabel>
                 <Input
-                    color={formState.errors.confirmPassword ? "error" : "primary"}
+                    error={!!formState.errors.confirmPassword}
                     type={"password"}
                     defaultValue={getValues("password")}
                     {...register("password", { required: true })}
@@ -46,11 +47,11 @@ const FormFirstStep = (props: props) => {
             <FormControl sx={{ width: '100%', display: 'flex' }}>
                 <FormLabel
                     sx={{ marginTop: '20px' }}
-                    color={formState.errors.confirmPassword ? "error" : "primary"}>
+                    error={!!formState.errors.confirmPassword}>
                     Confirmação de senha:
                 </FormLabel>
                 <Input
-                    color={formState.errors.confirmPassword ? "error" : "primary"}
+                    error={!!formState.errors.confirmPassword}
                     type={"password"}
                     defaultValue={getValues("confirmPassword")}
                     {...register("confirmPassword", { required: true })}

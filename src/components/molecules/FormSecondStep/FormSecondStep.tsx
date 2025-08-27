@@ -6,25 +6,25 @@ const FormSecondStep = (props: props) => {
     return (
         <Box sx={{ width: '80%' }}>
             <FormControl sx={{ width: '100%', display: 'flex' }}>
-                <FormLabel sx={{ marginTop: '20px' }} color={formState.errors.name ? "error" : "primary"}>
+                <FormLabel sx={{ marginTop: '20px' }} error={!!formState.errors.name}>
                     Nome:
                 </FormLabel>
                 <Input
                     defaultValue={getValues("name")}
                     {...register("name", { required: true })}
-                    color={formState.errors.name ? "error" : "primary"}
+                    error={!!formState.errors.name}
                     onFocus={() => clearErrors("name")}
                 />
                 {formState.errors.name && <Typography color="error">{formState.errors.name.message}</Typography>}
             </FormControl>
             <FormControl sx={{ width: '100%', display: 'flex' }}>
-                <FormLabel sx={{ marginTop: '20px' }} color={formState.errors.lastName ? "error" : "primary"}>
+                <FormLabel sx={{ marginTop: '20px' }} error={!!formState.errors.lastName}>
                     Sobrenome:
                 </FormLabel>
                 <Input
                     defaultValue={getValues("lastName")}
                     {...register("lastName", { required: true })}
-                    color={formState.errors.lastName ? "error" : "primary"}
+                    error={!!formState.errors.lastName}
                     onFocus={() => clearErrors("lastName")}
                 />
                 {formState.errors.lastName && <Typography color="error">{formState.errors.lastName.message}</Typography>}

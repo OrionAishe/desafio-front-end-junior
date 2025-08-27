@@ -6,13 +6,13 @@ const FormThirdStep = (props: props) => {
     return (
         <Box sx={{width: '80%'}}>
             <FormControl sx={{ width: '100%', display: 'flex' }}>
-                <FormLabel sx={{ marginTop: '20px' }} color={formState.errors.name ? "error" : "primary"}>
+                <FormLabel sx={{ marginTop: '20px' }} error={!!formState.errors.address}>
                     Endereço Completo:
                 </FormLabel>
                 <Input
                     defaultValue={getValues("address")}
                     {...register("address", { required: true })}
-                    color={formState.errors.name ? "error" : "primary"}
+                    error={!!formState.errors.address}
                     onFocus={() => clearErrors("address")}
                 />
                 {formState.errors.address && <Typography color="error">{formState.errors.address.message}</Typography>}

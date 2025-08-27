@@ -59,20 +59,15 @@ const Form = () => {
     }
 
     function getFirstStepErrors() {
-        if (formState.touchedFields.email == undefined) {
-            setFirstStepError(true);
-            return
-        }
         if (fields.email == '') {
             setError("email", { message: "Campo não pode ficar vazio" });
-            setFirstStepError(true);
-            console.log(formState.touchedFields);
         } if (fields.password == '' && fields.confirmPassword == '') {
             setError("confirmPassword", { message: "Campo não pode ficar vazio" });
-            setFirstStepError(true);
         } if (fields.password != fields.confirmPassword) {
             setError("confirmPassword", { message: "Senha diferente da confirmação" });
+        } if (formState.touchedFields.email == undefined) {
             setFirstStepError(true);
+            return
         } if (formState.errors.email || formState.errors.password || formState.errors.confirmPassword) {
             setFirstStepError(true);
             setFirstStepCompleted(false);
@@ -83,17 +78,14 @@ const Form = () => {
     }
 
     function getSecondStepErrors() {
-        if (formState.touchedFields.name == undefined) {
-            setSecondStepError(true);
-            return
-        }
         if (fields.name == '') {
             setError("name", { message: "Campo não pode ficar vazio" });
-            setSecondStepError(true)
         }
         if (fields.lastName == '') {
             setError("lastName", { message: "Campo não pode ficar vazio" });
-            setSecondStepError(true)
+        }
+        if (formState.touchedFields.name == undefined) {
+            setSecondStepError(true);
         }
         if (formState.errors.name || formState.errors.lastName) {
             setSecondStepError(true);
@@ -105,13 +97,10 @@ const Form = () => {
     }
 
     function getThirdStepErrors() {
-        if (formState.touchedFields.address == undefined) {
-            setThirdStepError(true);
-            return
-        }
         if (fields.address == '') {
             setError("address", { message: "Campo não pode ficar vazio" });
-            setThirdStepError(true)
+        } if (formState.touchedFields.address == undefined) {
+            setThirdStepError(true);
         } if (formState.errors.address) {
             setThirdStepError(true);
             setThirdStepCompleted(false);
@@ -122,8 +111,8 @@ const Form = () => {
     }
 
     const handleNext = () => {
-        getFirstStepErrors()
         if (activeStep == 0) {
+            getFirstStepErrors()
             setActiveStep((prevActiveStep) => prevActiveStep + 1);
         }
         if (activeStep == 1) {
@@ -136,7 +125,9 @@ const Form = () => {
     };
 
     const handleBack = () => {
-        getFirstStepErrors()
+        if (activeStep == 0) {
+            getFirstStepErrors()
+        }
         if (activeStep == 1) {
             getSecondStepErrors()
         } if (activeStep == 2) {
